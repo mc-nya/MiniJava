@@ -1,4 +1,8 @@
 grammar MiniJava;
+options{
+
+  language=Java;
+  }
 goal:mainClass( classDeclaration)* EOF;
 mainClass:'class'Identifier'{''public''static''void''main''(''String''['']'Identifier')''{'statement'}''}';
 classDeclaration:'class'Identifier('extends'Identifier)?'{'(varDeclaration)* ( methodDeclaration )*'}';
@@ -19,7 +23,7 @@ expression	:	expression ( '&&' | '<' | '+' | '-' | '*' ) expression
 |	expression '[' expression ']'
 |	expression '.' 'length'
 |	expression '.' Identifier '(' ( expression ( ',' expression )* )? ')'
-|	<INTEGER_LITERAL>
+|	INTEGER_LITERAL
 |	'true'
 |	'false'
 |	Identifier
@@ -29,7 +33,6 @@ expression	:	expression ( '&&' | '<' | '+' | '-' | '*' ) expression
 |	'!' expression
 |	'(' expression ')';
 
-
-Identifier:[a-zA-Z_] [a-zA-Z0-9_]*;
 INTEGER_LITERAL:[0-9]+;
-WS:[' \n\r\t']+ -> skip;
+Identifier:[a-zA-Z_][a-zA-Z0-9_]*;
+WS:[ \n\r\t']+ -> skip;
