@@ -20,9 +20,8 @@ public class MiniJavaParser extends Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
-		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
-		T__31=32, T__32=33, T__33=34, T__34=35, INTEGER_LITERAL=36, Identifier=37, 
-		WS=38;
+		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, INTEGER_LITERAL=31, 
+		Identifier=32, WS=33, MUL=34, ADD=35, SUB=36, AND=37, LT=38;
 	public static final int
 		RULE_goal = 0, RULE_mainClass = 1, RULE_classDeclaration = 2, RULE_varDeclaration = 3, 
 		RULE_methodDeclaration = 4, RULE_type = 5, RULE_statement = 6, RULE_expression = 7;
@@ -35,14 +34,14 @@ public class MiniJavaParser extends Parser {
 		null, "'class'", "'{'", "'public'", "'static'", "'void'", "'main'", "'('", 
 		"'String'", "'['", "']'", "')'", "'}'", "'extends'", "';'", "','", "'return'", 
 		"'int'", "'boolean'", "'if'", "'else'", "'while'", "'System.out.println'", 
-		"'='", "'&&'", "'<'", "'+'", "'-'", "'*'", "'.'", "'length'", "'true'", 
-		"'false'", "'this'", "'new'", "'!'"
+		"'='", "'.'", "'length'", "'true'", "'false'", "'this'", "'new'", "'!'", 
+		null, null, null, "'*'", "'+'", "'-'", "'&&'", "'<'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		"INTEGER_LITERAL", "Identifier", "WS"
+		null, null, null, null, null, null, null, "INTEGER_LITERAL", "Identifier", 
+		"WS", "MUL", "ADD", "SUB", "AND", "LT"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -94,6 +93,17 @@ public class MiniJavaParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class GoalContext extends ParserRuleContext {
+		public GoalContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_goal; }
+	 
+		public GoalContext() { }
+		public void copyFrom(GoalContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class LabelGoalContext extends GoalContext {
 		public MainClassContext mainClass() {
 			return getRuleContext(MainClassContext.class,0);
 		}
@@ -104,17 +114,19 @@ public class MiniJavaParser extends Parser {
 		public ClassDeclarationContext classDeclaration(int i) {
 			return getRuleContext(ClassDeclarationContext.class,i);
 		}
-		public GoalContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_goal; }
+		public LabelGoalContext(GoalContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterGoal(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterLabelGoal(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitGoal(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitLabelGoal(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitLabelGoal(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -123,6 +135,7 @@ public class MiniJavaParser extends Parser {
 		enterRule(_localctx, 0, RULE_goal);
 		int _la;
 		try {
+			_localctx = new LabelGoalContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(16);
@@ -157,6 +170,17 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class MainClassContext extends ParserRuleContext {
+		public MainClassContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_mainClass; }
+	 
+		public MainClassContext() { }
+		public void copyFrom(MainClassContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class LabelMainClassContext extends MainClassContext {
 		public List<TerminalNode> Identifier() { return getTokens(MiniJavaParser.Identifier); }
 		public TerminalNode Identifier(int i) {
 			return getToken(MiniJavaParser.Identifier, i);
@@ -164,17 +188,19 @@ public class MiniJavaParser extends Parser {
 		public StatementContext statement() {
 			return getRuleContext(StatementContext.class,0);
 		}
-		public MainClassContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_mainClass; }
+		public LabelMainClassContext(MainClassContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterMainClass(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterLabelMainClass(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitMainClass(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitLabelMainClass(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitLabelMainClass(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -182,6 +208,7 @@ public class MiniJavaParser extends Parser {
 		MainClassContext _localctx = new MainClassContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_mainClass);
 		try {
+			_localctx = new LabelMainClassContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(25);
@@ -232,6 +259,17 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class ClassDeclarationContext extends ParserRuleContext {
+		public ClassDeclarationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_classDeclaration; }
+	 
+		public ClassDeclarationContext() { }
+		public void copyFrom(ClassDeclarationContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class DclrClassContext extends ClassDeclarationContext {
 		public List<TerminalNode> Identifier() { return getTokens(MiniJavaParser.Identifier); }
 		public TerminalNode Identifier(int i) {
 			return getToken(MiniJavaParser.Identifier, i);
@@ -248,17 +286,19 @@ public class MiniJavaParser extends Parser {
 		public MethodDeclarationContext methodDeclaration(int i) {
 			return getRuleContext(MethodDeclarationContext.class,i);
 		}
-		public ClassDeclarationContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_classDeclaration; }
+		public DclrClassContext(ClassDeclarationContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterClassDeclaration(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterDclrClass(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitClassDeclaration(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitDclrClass(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitDclrClass(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -267,6 +307,7 @@ public class MiniJavaParser extends Parser {
 		enterRule(_localctx, 4, RULE_classDeclaration);
 		int _la;
 		try {
+			_localctx = new DclrClassContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(43);
@@ -331,21 +372,34 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class VarDeclarationContext extends ParserRuleContext {
-		public TypeContext type() {
-			return getRuleContext(TypeContext.class,0);
-		}
-		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
 		public VarDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_varDeclaration; }
+	 
+		public VarDeclarationContext() { }
+		public void copyFrom(VarDeclarationContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class DclrVarContext extends VarDeclarationContext {
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
+		}
+		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
+		public DclrVarContext(VarDeclarationContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterVarDeclaration(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterDclrVar(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitVarDeclaration(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitDclrVar(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitDclrVar(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -353,6 +407,7 @@ public class MiniJavaParser extends Parser {
 		VarDeclarationContext _localctx = new VarDeclarationContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_varDeclaration);
 		try {
+			_localctx = new DclrVarContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(64);
@@ -375,6 +430,17 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class MethodDeclarationContext extends ParserRuleContext {
+		public MethodDeclarationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_methodDeclaration; }
+	 
+		public MethodDeclarationContext() { }
+		public void copyFrom(MethodDeclarationContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class DclrMethodContext extends MethodDeclarationContext {
 		public List<TypeContext> type() {
 			return getRuleContexts(TypeContext.class);
 		}
@@ -400,17 +466,19 @@ public class MiniJavaParser extends Parser {
 		public StatementContext statement(int i) {
 			return getRuleContext(StatementContext.class,i);
 		}
-		public MethodDeclarationContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_methodDeclaration; }
+		public DclrMethodContext(MethodDeclarationContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterMethodDeclaration(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterDclrMethod(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitMethodDeclaration(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitDclrMethod(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitDclrMethod(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -420,6 +488,7 @@ public class MiniJavaParser extends Parser {
 		int _la;
 		try {
 			int _alt;
+			_localctx = new DclrMethodContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(68);
@@ -516,18 +585,79 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class TypeContext extends ParserRuleContext {
-		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
 		public TypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_type; }
+	 
+		public TypeContext() { }
+		public void copyFrom(TypeContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class TypeArrayContext extends TypeContext {
+		public TypeArrayContext(TypeContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterType(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterTypeArray(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitType(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitTypeArray(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitTypeArray(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class TypeIdContext extends TypeContext {
+		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
+		public TypeIdContext(TypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterTypeId(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitTypeId(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitTypeId(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class TypeBoolContext extends TypeContext {
+		public TypeBoolContext(TypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterTypeBool(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitTypeBool(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitTypeBool(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class TypeIntContext extends TypeContext {
+		public TypeIntContext(TypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterTypeInt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitTypeInt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitTypeInt(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -539,6 +669,7 @@ public class MiniJavaParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
+				_localctx = new TypeArrayContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(104);
@@ -550,6 +681,7 @@ public class MiniJavaParser extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new TypeBoolContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(107);
@@ -557,6 +689,7 @@ public class MiniJavaParser extends Parser {
 				}
 				break;
 			case 3:
+				_localctx = new TypeIntContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(108);
@@ -564,6 +697,7 @@ public class MiniJavaParser extends Parser {
 				}
 				break;
 			case 4:
+				_localctx = new TypeIdContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(109);
@@ -584,30 +718,145 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class StatementContext extends ParserRuleContext {
+		public StatementContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_statement; }
+	 
+		public StatementContext() { }
+		public void copyFrom(StatementContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class StmOutContext extends StatementContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public StmOutContext(StatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterStmOut(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitStmOut(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitStmOut(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class StmWhileContext extends StatementContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public StatementContext statement() {
+			return getRuleContext(StatementContext.class,0);
+		}
+		public StmWhileContext(StatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterStmWhile(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitStmWhile(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitStmWhile(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class StmBraceContext extends StatementContext {
 		public List<StatementContext> statement() {
 			return getRuleContexts(StatementContext.class);
 		}
 		public StatementContext statement(int i) {
 			return getRuleContext(StatementContext.class,i);
 		}
+		public StmBraceContext(StatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterStmBrace(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitStmBrace(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitStmBrace(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class StmIfContext extends StatementContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public List<StatementContext> statement() {
+			return getRuleContexts(StatementContext.class);
+		}
+		public StatementContext statement(int i) {
+			return getRuleContext(StatementContext.class,i);
+		}
+		public StmIfContext(StatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterStmIf(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitStmIf(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitStmIf(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class StmAssignContext extends StatementContext {
+		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public StmAssignContext(StatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterStmAssign(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitStmAssign(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitStmAssign(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class StmArrayAssignContext extends StatementContext {
+		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
-		public StatementContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_statement; }
+		public StmArrayAssignContext(StatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterStatement(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterStmArrayAssign(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitStatement(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitStmArrayAssign(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitStmArrayAssign(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -620,6 +869,7 @@ public class MiniJavaParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 			case 1:
+				_localctx = new StmBraceContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(112);
@@ -643,6 +893,7 @@ public class MiniJavaParser extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new StmIfContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(120);
@@ -662,6 +913,7 @@ public class MiniJavaParser extends Parser {
 				}
 				break;
 			case 3:
+				_localctx = new StmWhileContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(128);
@@ -677,6 +929,7 @@ public class MiniJavaParser extends Parser {
 				}
 				break;
 			case 4:
+				_localctx = new StmOutContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(134);
@@ -692,6 +945,7 @@ public class MiniJavaParser extends Parser {
 				}
 				break;
 			case 5:
+				_localctx = new StmAssignContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(140);
@@ -705,6 +959,7 @@ public class MiniJavaParser extends Parser {
 				}
 				break;
 			case 6:
+				_localctx = new StmArrayAssignContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(145);
@@ -737,25 +992,257 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class ExpressionContext extends ParserRuleContext {
-		public TerminalNode INTEGER_LITERAL() { return getToken(MiniJavaParser.INTEGER_LITERAL, 0); }
-		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
+		public ExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_expression; }
+	 
+		public ExpressionContext() { }
+		public void copyFrom(ExpressionContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class ExpArrayDefineContext extends ExpressionContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ExpArrayDefineContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpArrayDefine(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpArrayDefine(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitExpArrayDefine(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExpFalseContext extends ExpressionContext {
+		public ExpFalseContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpFalse(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpFalse(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitExpFalse(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExpCallContext extends ExpressionContext {
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public ExpressionContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_expression; }
+		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
+		public ExpCallContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpression(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpCall(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpression(this);
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpCall(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitExpCall(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExpBracketContext extends ExpressionContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ExpBracketContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpBracket(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpBracket(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitExpBracket(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExpCalcContext extends ExpressionContext {
+		public Token op;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public ExpCalcContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpCalc(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpCalc(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitExpCalc(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExpLengthContext extends ExpressionContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ExpLengthContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpLength(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpLength(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitExpLength(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExpTureContext extends ExpressionContext {
+		public ExpTureContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpTure(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpTure(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitExpTure(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExpArrayContext extends ExpressionContext {
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public ExpArrayContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpArray(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpArray(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitExpArray(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExpNotContext extends ExpressionContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ExpNotContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpNot(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpNot(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitExpNot(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExpIdContext extends ExpressionContext {
+		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
+		public ExpIdContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpId(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpId(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitExpId(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExpIdDefineContext extends ExpressionContext {
+		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
+		public ExpIdDefineContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpIdDefine(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpIdDefine(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitExpIdDefine(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExpThisContext extends ExpressionContext {
+		public ExpThisContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpThis(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpThis(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitExpThis(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExpIntContext extends ExpressionContext {
+		public TerminalNode INTEGER_LITERAL() { return getToken(MiniJavaParser.INTEGER_LITERAL, 0); }
+		public ExpIntContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).enterExpInt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaListener ) ((MiniJavaListener)listener).exitExpInt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiniJavaVisitor ) return ((MiniJavaVisitor<? extends T>)visitor).visitExpInt(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -780,38 +1267,57 @@ public class MiniJavaParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
 			case 1:
 				{
+				_localctx = new ExpIntContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
 				setState(156);
 				match(INTEGER_LITERAL);
 				}
 				break;
 			case 2:
 				{
+				_localctx = new ExpTureContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(157);
-				match(T__30);
+				match(T__25);
 				}
 				break;
 			case 3:
 				{
+				_localctx = new ExpFalseContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(158);
-				match(T__31);
+				match(T__26);
 				}
 				break;
 			case 4:
 				{
+				_localctx = new ExpIdContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(159);
 				match(Identifier);
 				}
 				break;
 			case 5:
 				{
+				_localctx = new ExpThisContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(160);
-				match(T__32);
+				match(T__27);
 				}
 				break;
 			case 6:
 				{
+				_localctx = new ExpArrayDefineContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(161);
-				match(T__33);
+				match(T__28);
 				setState(162);
 				match(T__16);
 				setState(163);
@@ -824,8 +1330,11 @@ public class MiniJavaParser extends Parser {
 				break;
 			case 7:
 				{
+				_localctx = new ExpIdDefineContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(167);
-				match(T__33);
+				match(T__28);
 				setState(168);
 				match(Identifier);
 				setState(169);
@@ -836,14 +1345,20 @@ public class MiniJavaParser extends Parser {
 				break;
 			case 8:
 				{
+				_localctx = new ExpNotContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(171);
-				match(T__34);
+				match(T__29);
 				setState(172);
 				expression(2);
 				}
 				break;
 			case 9:
 				{
+				_localctx = new ExpBracketContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(173);
 				match(T__6);
 				setState(174);
@@ -867,14 +1382,15 @@ public class MiniJavaParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
 					case 1:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new ExpCalcContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(179);
 						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
 						setState(180);
+						((ExpCalcContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << T__27))) != 0)) ) {
-						_errHandler.recoverInline(this);
+						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << MUL) | (1L << ADD) | (1L << SUB) | (1L << AND) | (1L << LT))) != 0)) ) {
+							((ExpCalcContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -887,7 +1403,7 @@ public class MiniJavaParser extends Parser {
 						break;
 					case 2:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new ExpArrayContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(182);
 						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
@@ -901,24 +1417,24 @@ public class MiniJavaParser extends Parser {
 						break;
 					case 3:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new ExpLengthContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(187);
 						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
 						setState(188);
-						match(T__28);
+						match(T__23);
 						setState(189);
-						match(T__29);
+						match(T__24);
 						}
 						break;
 					case 4:
 						{
-						_localctx = new ExpressionContext(_parentctx, _parentState);
+						_localctx = new ExpCallContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(190);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
 						setState(191);
-						match(T__28);
+						match(T__23);
 						setState(192);
 						match(Identifier);
 						setState(193);
@@ -926,7 +1442,7 @@ public class MiniJavaParser extends Parser {
 						setState(202);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
-						if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__6) | (1L << T__30) | (1L << T__31) | (1L << T__32) | (1L << T__33) | (1L << T__34) | (1L << INTEGER_LITERAL) | (1L << Identifier))) != 0)) {
+						if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__6) | (1L << T__25) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__29) | (1L << INTEGER_LITERAL) | (1L << Identifier))) != 0)) {
 							{
 							setState(194);
 							expression(0);
@@ -1009,51 +1525,51 @@ public class MiniJavaParser extends Parser {
 		"\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u00b4\n\t\3\t\3\t\3"+
 		"\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\7\t\u00c8"+
 		"\n\t\f\t\16\t\u00cb\13\t\5\t\u00cd\n\t\3\t\7\t\u00d0\n\t\f\t\16\t\u00d3"+
-		"\13\t\3\t\2\3\20\n\2\4\6\b\n\f\16\20\2\3\3\2\32\36\u00eb\2\22\3\2\2\2"+
-		"\4\33\3\2\2\2\6-\3\2\2\2\bB\3\2\2\2\nF\3\2\2\2\fp\3\2\2\2\16\u009b\3\2"+
-		"\2\2\20\u00b3\3\2\2\2\22\26\5\4\3\2\23\25\5\6\4\2\24\23\3\2\2\2\25\30"+
-		"\3\2\2\2\26\24\3\2\2\2\26\27\3\2\2\2\27\31\3\2\2\2\30\26\3\2\2\2\31\32"+
-		"\7\2\2\3\32\3\3\2\2\2\33\34\7\3\2\2\34\35\7\'\2\2\35\36\7\4\2\2\36\37"+
-		"\7\5\2\2\37 \7\6\2\2 !\7\7\2\2!\"\7\b\2\2\"#\7\t\2\2#$\7\n\2\2$%\7\13"+
-		"\2\2%&\7\f\2\2&\'\7\'\2\2\'(\7\r\2\2()\7\4\2\2)*\5\16\b\2*+\7\16\2\2+"+
-		",\7\16\2\2,\5\3\2\2\2-.\7\3\2\2.\61\7\'\2\2/\60\7\17\2\2\60\62\7\'\2\2"+
-		"\61/\3\2\2\2\61\62\3\2\2\2\62\63\3\2\2\2\63\67\7\4\2\2\64\66\5\b\5\2\65"+
-		"\64\3\2\2\2\669\3\2\2\2\67\65\3\2\2\2\678\3\2\2\28=\3\2\2\29\67\3\2\2"+
-		"\2:<\5\n\6\2;:\3\2\2\2<?\3\2\2\2=;\3\2\2\2=>\3\2\2\2>@\3\2\2\2?=\3\2\2"+
-		"\2@A\7\16\2\2A\7\3\2\2\2BC\5\f\7\2CD\7\'\2\2DE\7\20\2\2E\t\3\2\2\2FG\7"+
-		"\5\2\2GH\5\f\7\2HI\7\'\2\2IU\7\t\2\2JK\5\f\7\2KR\7\'\2\2LM\7\21\2\2MN"+
-		"\5\f\7\2NO\7\'\2\2OQ\3\2\2\2PL\3\2\2\2QT\3\2\2\2RP\3\2\2\2RS\3\2\2\2S"+
-		"V\3\2\2\2TR\3\2\2\2UJ\3\2\2\2UV\3\2\2\2VW\3\2\2\2WX\7\r\2\2X\\\7\4\2\2"+
-		"Y[\5\b\5\2ZY\3\2\2\2[^\3\2\2\2\\Z\3\2\2\2\\]\3\2\2\2]b\3\2\2\2^\\\3\2"+
-		"\2\2_a\5\16\b\2`_\3\2\2\2ad\3\2\2\2b`\3\2\2\2bc\3\2\2\2ce\3\2\2\2db\3"+
-		"\2\2\2ef\7\22\2\2fg\5\20\t\2gh\7\20\2\2hi\7\16\2\2i\13\3\2\2\2jk\7\23"+
-		"\2\2kl\7\13\2\2lq\7\f\2\2mq\7\24\2\2nq\7\23\2\2oq\7\'\2\2pj\3\2\2\2pm"+
-		"\3\2\2\2pn\3\2\2\2po\3\2\2\2q\r\3\2\2\2rv\7\4\2\2su\5\16\b\2ts\3\2\2\2"+
-		"ux\3\2\2\2vt\3\2\2\2vw\3\2\2\2wy\3\2\2\2xv\3\2\2\2y\u009c\7\16\2\2z{\7"+
-		"\25\2\2{|\7\t\2\2|}\5\20\t\2}~\7\r\2\2~\177\5\16\b\2\177\u0080\7\26\2"+
-		"\2\u0080\u0081\5\16\b\2\u0081\u009c\3\2\2\2\u0082\u0083\7\27\2\2\u0083"+
-		"\u0084\7\t\2\2\u0084\u0085\5\20\t\2\u0085\u0086\7\r\2\2\u0086\u0087\5"+
-		"\16\b\2\u0087\u009c\3\2\2\2\u0088\u0089\7\30\2\2\u0089\u008a\7\t\2\2\u008a"+
-		"\u008b\5\20\t\2\u008b\u008c\7\r\2\2\u008c\u008d\7\20\2\2\u008d\u009c\3"+
-		"\2\2\2\u008e\u008f\7\'\2\2\u008f\u0090\7\31\2\2\u0090\u0091\5\20\t\2\u0091"+
-		"\u0092\7\20\2\2\u0092\u009c\3\2\2\2\u0093\u0094\7\'\2\2\u0094\u0095\7"+
-		"\13\2\2\u0095\u0096\5\20\t\2\u0096\u0097\7\f\2\2\u0097\u0098\7\31\2\2"+
-		"\u0098\u0099\5\20\t\2\u0099\u009a\7\20\2\2\u009a\u009c\3\2\2\2\u009br"+
-		"\3\2\2\2\u009bz\3\2\2\2\u009b\u0082\3\2\2\2\u009b\u0088\3\2\2\2\u009b"+
-		"\u008e\3\2\2\2\u009b\u0093\3\2\2\2\u009c\17\3\2\2\2\u009d\u009e\b\t\1"+
-		"\2\u009e\u00b4\7&\2\2\u009f\u00b4\7!\2\2\u00a0\u00b4\7\"\2\2\u00a1\u00b4"+
-		"\7\'\2\2\u00a2\u00b4\7#\2\2\u00a3\u00a4\7$\2\2\u00a4\u00a5\7\23\2\2\u00a5"+
+		"\13\t\3\t\2\3\20\n\2\4\6\b\n\f\16\20\2\3\3\2$(\u00eb\2\22\3\2\2\2\4\33"+
+		"\3\2\2\2\6-\3\2\2\2\bB\3\2\2\2\nF\3\2\2\2\fp\3\2\2\2\16\u009b\3\2\2\2"+
+		"\20\u00b3\3\2\2\2\22\26\5\4\3\2\23\25\5\6\4\2\24\23\3\2\2\2\25\30\3\2"+
+		"\2\2\26\24\3\2\2\2\26\27\3\2\2\2\27\31\3\2\2\2\30\26\3\2\2\2\31\32\7\2"+
+		"\2\3\32\3\3\2\2\2\33\34\7\3\2\2\34\35\7\"\2\2\35\36\7\4\2\2\36\37\7\5"+
+		"\2\2\37 \7\6\2\2 !\7\7\2\2!\"\7\b\2\2\"#\7\t\2\2#$\7\n\2\2$%\7\13\2\2"+
+		"%&\7\f\2\2&\'\7\"\2\2\'(\7\r\2\2()\7\4\2\2)*\5\16\b\2*+\7\16\2\2+,\7\16"+
+		"\2\2,\5\3\2\2\2-.\7\3\2\2.\61\7\"\2\2/\60\7\17\2\2\60\62\7\"\2\2\61/\3"+
+		"\2\2\2\61\62\3\2\2\2\62\63\3\2\2\2\63\67\7\4\2\2\64\66\5\b\5\2\65\64\3"+
+		"\2\2\2\669\3\2\2\2\67\65\3\2\2\2\678\3\2\2\28=\3\2\2\29\67\3\2\2\2:<\5"+
+		"\n\6\2;:\3\2\2\2<?\3\2\2\2=;\3\2\2\2=>\3\2\2\2>@\3\2\2\2?=\3\2\2\2@A\7"+
+		"\16\2\2A\7\3\2\2\2BC\5\f\7\2CD\7\"\2\2DE\7\20\2\2E\t\3\2\2\2FG\7\5\2\2"+
+		"GH\5\f\7\2HI\7\"\2\2IU\7\t\2\2JK\5\f\7\2KR\7\"\2\2LM\7\21\2\2MN\5\f\7"+
+		"\2NO\7\"\2\2OQ\3\2\2\2PL\3\2\2\2QT\3\2\2\2RP\3\2\2\2RS\3\2\2\2SV\3\2\2"+
+		"\2TR\3\2\2\2UJ\3\2\2\2UV\3\2\2\2VW\3\2\2\2WX\7\r\2\2X\\\7\4\2\2Y[\5\b"+
+		"\5\2ZY\3\2\2\2[^\3\2\2\2\\Z\3\2\2\2\\]\3\2\2\2]b\3\2\2\2^\\\3\2\2\2_a"+
+		"\5\16\b\2`_\3\2\2\2ad\3\2\2\2b`\3\2\2\2bc\3\2\2\2ce\3\2\2\2db\3\2\2\2"+
+		"ef\7\22\2\2fg\5\20\t\2gh\7\20\2\2hi\7\16\2\2i\13\3\2\2\2jk\7\23\2\2kl"+
+		"\7\13\2\2lq\7\f\2\2mq\7\24\2\2nq\7\23\2\2oq\7\"\2\2pj\3\2\2\2pm\3\2\2"+
+		"\2pn\3\2\2\2po\3\2\2\2q\r\3\2\2\2rv\7\4\2\2su\5\16\b\2ts\3\2\2\2ux\3\2"+
+		"\2\2vt\3\2\2\2vw\3\2\2\2wy\3\2\2\2xv\3\2\2\2y\u009c\7\16\2\2z{\7\25\2"+
+		"\2{|\7\t\2\2|}\5\20\t\2}~\7\r\2\2~\177\5\16\b\2\177\u0080\7\26\2\2\u0080"+
+		"\u0081\5\16\b\2\u0081\u009c\3\2\2\2\u0082\u0083\7\27\2\2\u0083\u0084\7"+
+		"\t\2\2\u0084\u0085\5\20\t\2\u0085\u0086\7\r\2\2\u0086\u0087\5\16\b\2\u0087"+
+		"\u009c\3\2\2\2\u0088\u0089\7\30\2\2\u0089\u008a\7\t\2\2\u008a\u008b\5"+
+		"\20\t\2\u008b\u008c\7\r\2\2\u008c\u008d\7\20\2\2\u008d\u009c\3\2\2\2\u008e"+
+		"\u008f\7\"\2\2\u008f\u0090\7\31\2\2\u0090\u0091\5\20\t\2\u0091\u0092\7"+
+		"\20\2\2\u0092\u009c\3\2\2\2\u0093\u0094\7\"\2\2\u0094\u0095\7\13\2\2\u0095"+
+		"\u0096\5\20\t\2\u0096\u0097\7\f\2\2\u0097\u0098\7\31\2\2\u0098\u0099\5"+
+		"\20\t\2\u0099\u009a\7\20\2\2\u009a\u009c\3\2\2\2\u009br\3\2\2\2\u009b"+
+		"z\3\2\2\2\u009b\u0082\3\2\2\2\u009b\u0088\3\2\2\2\u009b\u008e\3\2\2\2"+
+		"\u009b\u0093\3\2\2\2\u009c\17\3\2\2\2\u009d\u009e\b\t\1\2\u009e\u00b4"+
+		"\7!\2\2\u009f\u00b4\7\34\2\2\u00a0\u00b4\7\35\2\2\u00a1\u00b4\7\"\2\2"+
+		"\u00a2\u00b4\7\36\2\2\u00a3\u00a4\7\37\2\2\u00a4\u00a5\7\23\2\2\u00a5"+
 		"\u00a6\7\13\2\2\u00a6\u00a7\5\20\t\2\u00a7\u00a8\7\f\2\2\u00a8\u00b4\3"+
-		"\2\2\2\u00a9\u00aa\7$\2\2\u00aa\u00ab\7\'\2\2\u00ab\u00ac\7\t\2\2\u00ac"+
-		"\u00b4\7\r\2\2\u00ad\u00ae\7%\2\2\u00ae\u00b4\5\20\t\4\u00af\u00b0\7\t"+
+		"\2\2\2\u00a9\u00aa\7\37\2\2\u00aa\u00ab\7\"\2\2\u00ab\u00ac\7\t\2\2\u00ac"+
+		"\u00b4\7\r\2\2\u00ad\u00ae\7 \2\2\u00ae\u00b4\5\20\t\4\u00af\u00b0\7\t"+
 		"\2\2\u00b0\u00b1\5\20\t\2\u00b1\u00b2\7\r\2\2\u00b2\u00b4\3\2\2\2\u00b3"+
 		"\u009d\3\2\2\2\u00b3\u009f\3\2\2\2\u00b3\u00a0\3\2\2\2\u00b3\u00a1\3\2"+
 		"\2\2\u00b3\u00a2\3\2\2\2\u00b3\u00a3\3\2\2\2\u00b3\u00a9\3\2\2\2\u00b3"+
 		"\u00ad\3\2\2\2\u00b3\u00af\3\2\2\2\u00b4\u00d1\3\2\2\2\u00b5\u00b6\f\17"+
 		"\2\2\u00b6\u00b7\t\2\2\2\u00b7\u00d0\5\20\t\20\u00b8\u00b9\f\16\2\2\u00b9"+
 		"\u00ba\7\13\2\2\u00ba\u00bb\5\20\t\2\u00bb\u00bc\7\f\2\2\u00bc\u00d0\3"+
-		"\2\2\2\u00bd\u00be\f\r\2\2\u00be\u00bf\7\37\2\2\u00bf\u00d0\7 \2\2\u00c0"+
-		"\u00c1\f\f\2\2\u00c1\u00c2\7\37\2\2\u00c2\u00c3\7\'\2\2\u00c3\u00cc\7"+
+		"\2\2\2\u00bd\u00be\f\r\2\2\u00be\u00bf\7\32\2\2\u00bf\u00d0\7\33\2\2\u00c0"+
+		"\u00c1\f\f\2\2\u00c1\u00c2\7\32\2\2\u00c2\u00c3\7\"\2\2\u00c3\u00cc\7"+
 		"\t\2\2\u00c4\u00c9\5\20\t\2\u00c5\u00c6\7\21\2\2\u00c6\u00c8\5\20\t\2"+
 		"\u00c7\u00c5\3\2\2\2\u00c8\u00cb\3\2\2\2\u00c9\u00c7\3\2\2\2\u00c9\u00ca"+
 		"\3\2\2\2\u00ca\u00cd\3\2\2\2\u00cb\u00c9\3\2\2\2\u00cc\u00c4\3\2\2\2\u00cc"+

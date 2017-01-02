@@ -1,16 +1,13 @@
 /**
  * Created by LMC on 2017/1/1.
  */
+import antlr.gen.EvalVisitor;
 import antlr.gen.MiniJavaLexer;
 import antlr.gen.MiniJavaParser;
 
-import javafx.scene.control.TreeView;
-import org.antlr.v4.gui.TreeViewer;
+import antlr.gen.MiniJavaVisitor;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
-
-import javax.swing.*;
-import java.util.Arrays;
 
 
 public class Test {
@@ -20,6 +17,9 @@ public class Test {
         CommonTokenStream tokens=new CommonTokenStream(lexer);
         MiniJavaParser parser=new MiniJavaParser(tokens);
         ParseTree tree=parser.goal();
+
+        EvalVisitor eval=new EvalVisitor();
+        eval.visit(tree);
 
         //print AST string
         System.out.println(tree.toStringTree(parser));
